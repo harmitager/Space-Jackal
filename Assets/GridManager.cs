@@ -52,7 +52,7 @@ public class GridManager: MonoBehaviour
 	}
 	
 	//Finally the method which initialises and positions all the tiles
-	void createGrid()
+	void initGrid()
 	{
 		//Game object which is the parent of all the hex tiles
 		GameObject squareGridGO = new GameObject("SquareGrid");
@@ -69,6 +69,7 @@ public class GridManager: MonoBehaviour
 		makeSquare(gridWidthInSquares/2, gridHeightInSquares, squareGridGO);
 		makeSquare(-1, gridHeightInSquares/2, squareGridGO);
 		makeSquare(gridWidthInSquares, gridHeightInSquares/2, squareGridGO);
+		makeShips ();
 	}
 
 	//Setup starting squares
@@ -81,16 +82,29 @@ public class GridManager: MonoBehaviour
 		square.transform.parent = squareGridGO.transform;
 	}
 
-	//Place ships
-	void placeShips(float x, float y)
+	void makeShips()
+	{
+		GameObject Ships = new GameObject ("Ships");
+		makeShip (gridWidthInSquares / 2, -1, Ships);
+		makeShip (gridWidthInSquares / 2, gridHeightInSquares, Ships);
+		makeShip (-1, gridHeightInSquares/2, Ships);
+		makeShip(gridWidthInSquares, gridHeightInSquares/2, Ships);
+	}
+	//Create a ship
+	void makeShip(float x, float y, GameObject Ships)
 	{
 		GameObject ship = (GameObject)Instantiate(Ship);
+		//Current position in grid
+		Vector2 gridPos = new Vector2 (x, y);
+		ship.transform.position = calcWorldCoord (gridPos);
+		ship.transform.position -= transform.forward*2.5f;
+		ship.transform.parent = Ships.transform;
 	}
 	
 	//The grid should be generated on game start
 	void Start()
 	{
 		setSizes();
-		createGrid();
+		initGrid();
 	}
 }
