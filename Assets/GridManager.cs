@@ -7,6 +7,7 @@ public class GridManager: MonoBehaviour
 	//instantiate it by dragging the prefab on this variable using unity editor
 	public GameObject Square;
 	public GameObject Ship;
+	public GameObject Pirate;
 	//next two variables can also be instantiated using unity editor
 	public int gridWidthInSquares = 13;
 	public int gridHeightInSquares = 13;
@@ -90,6 +91,7 @@ public class GridManager: MonoBehaviour
 		makeShip (-1, gridHeightInSquares/2, Ships);
 		makeShip(gridWidthInSquares, gridHeightInSquares/2, Ships);
 	}
+
 	//Create a ship
 	void makeShip(float x, float y, GameObject Ships)
 	{
@@ -100,7 +102,14 @@ public class GridManager: MonoBehaviour
 		ship.transform.position -= transform.forward*2.5f;
 		ship.transform.parent = Ships.transform;
 	}
-	
+
+	//Place single starting pirate
+	void makePirate(float x,float y, GameObject Ship)
+	{
+		GameObject pirate = (GameObject)Instantiate (Pirate);
+		Vector2 gridPos = new Vector2 (x, y);
+
+	}
 	//The grid should be generated on game start
 	void Start()
 	{
